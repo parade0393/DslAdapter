@@ -66,7 +66,10 @@ open class DslAdapter(dataItems: List<DslAdapterItem>? = null) :
     var onceFilterParams: FilterParams? = null
 
 
-    /**默认的[FilterParams]*/
+    /**
+     * 默认的[FilterParams]
+     * [com.angcyo.dsladapter.data.UpdateDataConfig.filterParams]在默认的filterParams基础之上增加了payload
+     * */
     @SuppressLint("KotlinNullnessAnnotation")
     @NonNull
     var defaultFilterParams: FilterParams? = null
@@ -769,6 +772,7 @@ open class DslAdapter(dataItems: List<DslAdapterItem>? = null) :
         change: (dataItems: MutableList<DslAdapterItem>) -> Unit
     ) {
         changeItems(updateState, filterParams) {
+            //此时的dataItems是旧数据
             change(dataItems)
         }
     }
@@ -930,10 +934,14 @@ open class DslAdapter(dataItems: List<DslAdapterItem>? = null) :
         updateItemDepend(filterParams)
     }
 
-    /**调用[DiffUtil]更新界面*/
+    /**
+     * 调用[DiffUtil]更新界面
+     * 最终调用这个方法更新UI
+     * */
     @UpdateByDiff
     fun updateItemDepend(filterParams: FilterParams = defaultFilterParams!!) {
 
+        //itemUpdateDependObserver默认是没有的
         itemUpdateDependObserver.forEach {
             it(filterParams)
         }

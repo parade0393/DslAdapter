@@ -82,7 +82,10 @@ class UpdateDataConfig {
             oldItem
         }
 
-    /**数据计算完之后*/
+    /**
+     * 数据计算完之后
+     * 数据计算完之后必须调用这个方案设置情感图的状态和加载更多的状态
+     * */
     var adapterUpdateResult: (dslAdapter: DslAdapter) -> Unit = { dslAdapter ->
         with(dslAdapter) {
             if (dataItems.isEmpty() && headerItems.isEmpty() && footerItems.isEmpty()) {
@@ -106,7 +109,9 @@ class UpdateDataConfig {
     }
 }
 
-/**轻量差异更新*/
+/**
+ * 轻量差异更新，分页数据最终通过此方法更新数据
+ * */
 @UpdateFlag
 fun UpdateDataConfig.updateData(originList: List<DslAdapterItem>): List<DslAdapterItem> {
 
@@ -124,6 +129,7 @@ fun UpdateDataConfig.updateData(originList: List<DslAdapterItem>): List<DslAdapt
         val oldRemoveList = mutableListOf<DslAdapterItem>()
         val newAddList = mutableListOf<DslAdapterItem>()
 
+        //开始更新的索引
         val updateStartIndex = max(0, updatePage - startPage) * pageSize
         val updateEndIndex = updateStartIndex + updateSize()
 

@@ -169,8 +169,12 @@ open class DslDataFilter(val dslAdapter: DslAdapter) {
             }
         }
 
+        //beforeFilterInterceptorList默认就有
+        /**[AdapterStatusFilterInterceptor]*/
         proceed(beforeFilterInterceptorList)
+        /** [GroupItemFilterInterceptor],[SubItemFilterInterceptor],[HideItemFilterInterceptor] */
         proceed(filterInterceptorList)
+        /** [LoadMoreFilterInterceptor] */
         proceed(afterFilterInterceptorList)
 
         return result
